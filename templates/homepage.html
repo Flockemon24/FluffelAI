@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FluffelAI - Dein KI-Assistent</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Rajdhani', sans-serif; background: #0a0a0f; min-height: 100vh; overflow-x: hidden; }
+        .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(ellipse at 20% 80%, rgba(120, 0, 255, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(0, 200, 255, 0.1) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(255, 0, 150, 0.05) 0%, transparent 70%); }
+        .bg-animation::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; animation: gridMove 20s linear infinite; }
+        @keyframes gridMove { 0% { transform: translate(0, 0); } 100% { transform: translate(50px, 50px); } }
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .particle { position: absolute; width: 4px; height: 4px; background: rgba(0, 200, 255, 0.6); border-radius: 50%; animation: float 15s infinite; }
+        .particle:nth-child(2) { left: 20%; animation-delay: -2s; background: rgba(255, 0, 150, 0.6); }
+        .particle:nth-child(3) { left: 40%; animation-delay: -4s; background: rgba(120, 0, 255, 0.6); }
+        .particle:nth-child(4) { left: 60%; animation-delay: -6s; background: rgba(0, 200, 255, 0.6); }
+        .particle:nth-child(5) { left: 80%; animation-delay: -8s; background: rgba(255, 0, 150, 0.6); }
+        .particle:nth-child(6) { left: 10%; animation-delay: -10s; background: rgba(120, 0, 255, 0.6); }
+        .particle:nth-child(7) { left: 70%; animation-delay: -12s; background: rgba(0, 200, 255, 0.6); }
+        .particle:nth-child(8) { left: 90%; animation-delay: -14s; background: rgba(255, 0, 150, 0.6); }
+        @keyframes float { 0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; } }
+        .navbar-custom { background: rgba(10, 10, 20, 0.8) !important; backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0, 200, 255, 0.2); padding: 1rem 0; }
+        .navbar-brand { font-family: 'Orbitron', sans-serif; font-size: 1.8rem !important; font-weight: 900; background: linear-gradient(135deg, #00c8ff, #ff0099, #7800ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: 0 0 30px rgba(0, 200, 255, 0.5); letter-spacing: 3px; }
+        .nav-link-custom { font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 1.1rem; color: rgba(255, 255, 255, 0.8) !important; text-transform: uppercase; letter-spacing: 2px; padding: 0.5rem 1.5rem !important; transition: all 0.3s ease; position: relative; }
+        .nav-link-custom::before { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: linear-gradient(90deg, #00c8ff, #ff0099); transition: all 0.3s ease; transform: translateX(-50%); }
+        .nav-link-custom:hover { color: #00c8ff !important; }
+        .nav-link-custom:hover::before { width: 80%; }
+        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 2rem; }
+        .hero-content { text-align: center; max-width: 900px; z-index: 1; }
+        .hero-title { font-family: 'Orbitron', sans-serif; font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; margin-bottom: 1.5rem; background: linear-gradient(135deg, #fff 0%, #00c8ff 50%, #ff0099 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: glow 3s ease-in-out infinite alternate; }
+        @keyframes glow { from { filter: drop-shadow(0 0 20px rgba(0, 200, 255, 0.3)); } to { filter: drop-shadow(0 0 40px rgba(255, 0, 150, 0.5)); } }
+        .hero-subtitle { font-size: clamp(1.2rem, 3vw, 1.8rem); color: rgba(255, 255, 255, 0.7); margin-bottom: 2rem; font-weight: 300; letter-spacing: 1px; }
+        .btn-glow { font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700; padding: 1rem 3rem; border: none; border-radius: 50px; text-transform: uppercase; letter-spacing: 3px; cursor: pointer; position: relative; overflow: hidden; transition: all 0.3s ease; text-decoration: none; display: inline-block; margin: 0.5rem; }
+        .btn-primary-glow { background: linear-gradient(135deg, #00c8ff, #7800ff); color: white; box-shadow: 0 0 30px rgba(0, 200, 255, 0.4), inset 0 0 30px rgba(255, 255, 255, 0.1); }
+        .btn-primary-glow:hover { transform: translateY(-3px); box-shadow: 0 0 50px rgba(0, 200, 255, 0.6), 0 10px 30px rgba(0, 0, 0, 0.3); }
+        .btn-secondary-glow { background: transparent; color: white; border: 2px solid rgba(255, 255, 255, 0.3); }
+        .btn-secondary-glow:hover { border-color: #ff0099; color: #ff0099; box-shadow: 0 0 30px rgba(255, 0, 150, 0.3); }
+        .features { padding: 5rem 2rem; background: rgba(10, 10, 20, 0.5); }
+        .feature-card { background: rgba(20, 20, 40, 0.6); border: 1px solid rgba(0, 200, 255, 0.2); border-radius: 20px; padding: 2rem; margin-bottom: 2rem; transition: all 0.3s ease; backdrop-filter: blur(10px); }
+        .feature-card:hover { transform: translateY(-10px); border-color: #00c8ff; box-shadow: 0 20px 40px rgba(0, 200, 255, 0.2); }
+        .feature-icon { font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(135deg, #00c8ff, #ff0099); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .feature-title { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; color: white; margin-bottom: 1rem; }
+        .feature-text { color: rgba(255, 255, 255, 0.6); font-size: 1rem; line-height: 1.6; }
+        .about-section { padding: 5rem 2rem; background: rgba(10, 10, 20, 0.3); }
+        .section-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: white; text-align: center; margin-bottom: 2rem; background: linear-gradient(135deg, #00c8ff, #ff0099); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .about-text { color: rgba(255, 255, 255, 0.7); font-size: 1.1rem; line-height: 1.8; text-align: center; max-width: 800px; margin: 0 auto; }
+        .developer-section { padding: 5rem 2rem; background: rgba(10, 10, 20, 0.5); }
+        .developer-card { background: rgba(20, 20, 40, 0.6); border: 1px solid rgba(0, 200, 255, 0.2); border-radius: 20px; padding: 2rem; max-width: 600px; margin: 0 auto; text-align: center; }
+        .developer-name { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: #00c8ff; margin-bottom: 0.5rem; }
+        .developer-role { color: rgba(255, 255, 255, 0.5); font-size: 1rem; margin-bottom: 1rem; }
+        .developer-bio { color: rgba(255, 255, 255, 0.7); font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem; }
+        .btn-github { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 8px; color: white; text-decoration: none; font-size: 0.9rem; transition: all 0.3s ease; }
+        .btn-github:hover { background: rgba(0, 200, 255, 0.2); border-color: #00c8ff; color: #00c8ff; }
+        footer { background: rgba(10, 10, 20, 0.9); border-top: 1px solid rgba(0, 200, 255, 0.2); padding: 2rem 0; text-align: center; }
+        .footer-text { color: rgba(255, 255, 255, 0.5); font-size: 0.9rem; }
+        .scanline { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.1) 51%); background-size: 100% 4px; pointer-events: none; z-index: 1000; opacity: 0.3; }
+        @media (max-width: 768px) { .hero-title { font-size: 2.5rem; } .btn-glow { padding: 0.8rem 2rem; font-size: 0.9rem; } }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="particles">
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    </div>
+    <div class="scanline"></div>
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">FLUFFELAI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="{{ url_for('login') }}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="{{ url_for('register') }}">Registrieren</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">FLUFFELAI</h1>
+            <p class="hero-subtitle">Dein intelligenter KI-Assistent der Zukunft</p>
+            <p style="color: rgba(255,255,255,0.5); margin-bottom: 2rem; font-size: 1.1rem;">Erlebe die nÃ¤chste Generation von KI-Chat. Schnell. Intelligent. PersÃ¶nlich.</p>
+            <div>
+                <a href="{{ url_for('register') }}" class="btn btn-primary-glow">Jetzt starten</a>
+                <a href="{{ url_for('login') }}" class="btn btn-secondary-glow">Login</a>
+            </div>
+        </div>
+    </section>
+    <section class="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4"><div class="feature-card"><div class="feature-icon">⚡</div><h3 class="feature-title">Blitzschnell</h3><p class="feature-text">Sofortige Antworten auf all deine Fragen. Keine Wartezeiten, keine Verzögerungen.</p></div></div>
+                <div class="col-md-4"><div class="feature-card"><div class="feature-icon">🧠</div><h3 class="feature-title">Intelligent</h3><p class="feature-text">Fortschrittliche KI-Technologie versteht dich und deine Bedürfnisse.</p></div></div>
+                <div class="col-md-4"><div class="feature-card"><div class="feature-icon">🔒</div><h3 class="feature-title">Sicher</h3><p class="feature-text">Deine Daten sind geschützt. Privatsphäre hat für uns höchste Priorität.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Über FluffelAI -->
+    <section class="about-section">
+        <div class="container">
+            <h2 class="section-title">Über FluffelAI</h2>
+            <p class="about-text">FluffelAI ist dein intelligenter KI-Assistent, der dir bei Fragen aller Art hilft. Ob technische Probleme, kreative Ideen oder einfach nur neugierige Fragen – ich bin rund um die Uhr für dich da. Als Chat-Assistent biete ich dir eine persönliche, interaktive Erfahrung, die weit über einfache Suchmaschinen hinausgeht.</p>
+        </div>
+    </section>
+
+    <!-- Über den Entwickler -->
+    <section class="developer-section">
+        <div class="container">
+            <h2 class="section-title">Der Entwickler</h2>
+            <div class="developer-card">
+                <div class="developer-info">
+                    <h3 class="developer-name">Florian</h3>
+                    <p class="developer-role">Entwickler & Gründer</p>
+                    <p class="developer-bio">Hinter FluffelAI steht Florian – ein leidenschaftlicher Entwickler, der KI-Technologie zugänglich machen möchte. Mit Liebe zum Detail und Fokus auf Benutzerfreundlichkeit hat er dieses Projekt ins Leben gerufen.</p>
+                    <a href="https://github.com/Flockemon24" target="_blank" class="btn-github">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub Profil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer><div class="container"><p class="footer-text">© 2026 FluffelAI - Die Zukunft des KI-Chats</p></div></footer>
+</body>
+</html>

@@ -125,6 +125,9 @@ def admin_required(f):
         return f(*args, **kwargs)
     return wrapper
 
+@app.route("/", methods=['GET', 'POST'])
+def home_page():
+    return render_template('homepage.html')
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -233,4 +236,3 @@ if __name__ == "__main__":
         db.create_all()
 
     app.run()
-
