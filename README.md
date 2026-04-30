@@ -51,4 +51,14 @@ SECRET_KEY=irgendein_geheimer_key
 python main.py
 ```
 Im Browser:
-    localhost:5000/register
+http://127.0.0.1:5000/register
+
+## 📁 Projektstruktur
+FluffelAI/
+│── main.py
+│── requirements.txt
+│
+├── templates/
+│ ├── index.html
+│ ├── login.html
+│ └── register.html
