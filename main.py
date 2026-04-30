@@ -9,6 +9,7 @@ import os
 from dotenv import load_dotenv
 from functools import wraps
 
+
 load_dotenv()
 api_key = os.getenv("OPENROUTER_API_KEY")
 
@@ -230,4 +231,6 @@ def logout():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+
     app.run()
+
