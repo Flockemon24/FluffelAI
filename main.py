@@ -115,7 +115,7 @@ def ask_ai(user_prompt):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Accounts.query.get(int(user_id))
+    return Accounts.query.get(Accounts, int(user_id))
 
 def admin_required(f):
     @wraps(f)
@@ -124,6 +124,11 @@ def admin_required(f):
             return "Forbidden", 403
         return f(*args, **kwargs)
     return wrapper
+
+@app.route("/init-db")
+def init_db():
+    db.create_all()
+    return "DB erstellt!"
 
 @app.route("/", methods=['GET', 'POST'])
 def home_page():
