@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FluffelAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <style>
+        /* Den gesamten Bildschirm füllen und zentrieren */
+        .login-body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center; /* Horizontal zentrieren */
+            align-items: center;     /* Vertikal zentrieren */
+            background-color: #f0f2f5;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Der weiße Kasten um die Form */
+        .login-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 350px;
+        }
+
+        /* Elemente untereinander stapeln */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Abstand zwischen den Boxen */
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        /* Styling für die Input-Boxen */
+        input {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        /* Styling für den Button */
+        button {
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar" style="background-color: #081534;">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1" style="color: #fff;">FluffelAI</span>
+        </div>
+    </nav>
+
+    <div class="login-body">
+        <div class="login-container">
+            <form class="login-form" action="/register" method="POST">
+                <h2><b>Registrierung</b></h2>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="E-Mail-Adresse" required>
+                <input type="password" name="password" placeholder="Passwort" required>
+                <button type="submit">Anmelden</button>
+            </form>
+            <p><br>Hast du schon einen Account?<br><a href="{{ url_for('login') }}">Hier anmelden!</a></p>
+        </div>
+    </div>
+</body>
+</html>
