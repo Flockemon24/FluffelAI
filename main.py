@@ -9,6 +9,7 @@ import os
 from dotenv import load_dotenv
 from functools import wraps
 
+
 load_dotenv()
 api_key = os.getenv("OPENROUTER_API_KEY")
 secret_key = os.getenv("SECRET_KEY")
