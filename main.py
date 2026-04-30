@@ -11,11 +11,18 @@ from functools import wraps
 
 load_dotenv()
 api_key = os.getenv("OPENROUTER_API_KEY")
-secret_key = os.getenv("SECRET_KEY")
 
 app = Flask(__name__)
-app.secret_key = secret_key
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
+app.secret_key = os.getenv("SECRET_KEY", "dev-key")
+
+db_url = os.getenv("DATABASE_URL")
+
+if db_url:
+    if db_url.startswith("postgres://"):
+        db_url = db_url.replace("postgres://", "postgresql://", 1)
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_url
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
@@ -222,5 +229,5 @@ def logout():
 
 if __name__ == "__main__":
     with app.app_context():
-        db.create_all
+        db.create_all()
     app.run()
