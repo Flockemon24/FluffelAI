@@ -54,6 +54,7 @@ Im Browser:
 http://127.0.0.1:5000/register
 
 ## 📁 Projektstruktur
+``` env
 FluffelAI/
 │── main.py
 │── requirements.txt
@@ -62,3 +63,4 @@ FluffelAI/
 │ ├── index.html
 │ ├── login.html
 │ └── register.html
+```
